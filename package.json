@@ -1,0 +1,23 @@
+{
+  "name": "vertical-calculator-mp",
+  "version": "0.0.4",
+  "description": "",
+  "main": "dist/index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^11.10.4",
+    "declaration-bundler-webpack-plugin": "^1.0.3",
+    "mocha": "^6.0.2",
+    "ts-loader": "^5.3.3",
+    "ts-node": "^8.0.2",
+    "typescript": "^3.3.3333",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3"
+  },
+  "scripts": {
+    "test": "mocha",
+    "build": "webpack"
+  },
+  "author": "meixuguang",
+  "license": "ISC"
+}
