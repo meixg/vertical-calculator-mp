@@ -1,5 +1,7 @@
 # 竖式计算器
 
+[![Build Status](https://travis-ci.com/meixg/vertical-calculator-mp.svg?branch=master)](https://travis-ci.com/meixg/vertical-calculator-mp)
+
 竖式计算器，可产出适用于小程序 rich-text 组件的 node 树。
 
 ## quick start
