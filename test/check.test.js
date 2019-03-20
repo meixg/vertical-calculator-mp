@@ -13,19 +13,16 @@ describe('Check Input', function () {
         it('input should be number', function () {
             const res = cal.generate('123', '+', '456');
             assert.equal(res.code, 1);
-            assert.deepEqual(res.result, []);
             assert(res.text);
         });
         it('not supported operator', function () {
             const res = cal.generate(12, '&', 456);
             assert.equal(res.code, 3);
-            assert.deepEqual(res.result, []);
             assert(res.text);
         });
         it('input must larger than zero', function () {
             const res = cal.generate(-12, '+', 456);
             assert.equal(res.code, 7);
-            assert.deepEqual(res.result, []);
             assert(res.text);
         });
     });
@@ -34,19 +31,16 @@ describe('Check Input', function () {
         it('numa should larger than numb', function () {
             const res = cal.generate(10, '/', 100);
             assert.equal(res.code, 4);
-            assert.deepEqual(res.result, []);
             assert(res.text);
         });
         it('numb should not be zero', function () {
             const res = cal.generate(10, '/', 0);
             assert.equal(res.code, 5);
-            assert.deepEqual(res.result, []);
             assert(res.text);
         });
         it('input should not be decimal', function () {
             const res = cal.generate(500, '/', 123.456);
             assert.equal(res.code, 2);
-            assert.deepEqual(res.result, []);
             assert(res.text);
         });
     });
@@ -55,7 +49,6 @@ describe('Check Input', function () {
         it('input should not be decimal', function () {
             const res = cal.generate(500, '*', 123.456);
             assert.equal(res.code, 2);
-            assert.deepEqual(res.result, []);
             assert(res.text);
         });
     });

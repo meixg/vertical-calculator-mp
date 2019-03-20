@@ -33,7 +33,7 @@ export class MultiplyCalculator extends RowGenerator {
 
         this.init(numa, numb);
 
-        const res: trNode[] = [];
+        let res: trNode[] = [];
         for (let i = this.numbLength - 1; i > -1; i --) {
             const num = numa * (+this.numbArr[i]);
             const diff = this.numbLength - 1 - i;
@@ -43,10 +43,15 @@ export class MultiplyCalculator extends RowGenerator {
 
         res.push(this.generateResultRow(numa * numb));
 
-        return [
+        res = [
             this.generateQuestionRow(numa, false),
             this.generateQuestionRow(numb, true)
         ].concat(res);
+
+        return {
+            nodes: res,
+            result: (numa * numb) + ''
+        };
     }
 
     private generateProcessRow(num: number, diff: number, isLast: boolean) {

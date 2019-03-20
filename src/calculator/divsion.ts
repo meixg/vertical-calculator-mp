@@ -55,7 +55,10 @@ export class DivsionCalculator extends RowGenerator {
             this.generateQuestionRow()
         ].concat(res);
 
-        return res;
+        return {
+            nodes: res,
+            result: zheng + '余' + (numa - numb * zheng)
+        }
     }
 
     /**

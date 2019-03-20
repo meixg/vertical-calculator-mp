@@ -6,7 +6,8 @@
 import {
     OPERATOR,
     result,
-    RESULT_CODE
+    RESULT_CODE,
+    trNode
 } from './types';
 import {DivsionCalculator} from './calculator/divsion';
 import {MultiplyCalculator} from './calculator/multiply';
@@ -30,7 +31,7 @@ export class VerticalCalculator {
         this.blockWidth = options.blockWidth || '10px';
     }
 
-    private calculate(numa, operator: OPERATOR, numb) {
+    private calculate(numa, operator: OPERATOR, numb): {nodes: trNode[], result: string} {
         switch (operator) {
             case OPERATOR.div:
                 const divisionCalculator = new DivsionCalculator({
@@ -69,20 +70,19 @@ export class VerticalCalculator {
             return checkResult;
         }
 
-        const result = this.calculate(numa, operator, numb);
+        const res = this.calculate(numa, operator, numb);
 
-        if (!result) {
+        if (!res) {
             return {
                 code: RESULT_CODE.operatorIsNotSupport,
-                result: [],
                 text: '不支持的运算符'
             };
         };
 
         return {
             code: RESULT_CODE.success,
-            result,
-            text: ''
+            result: res.result,
+            nodes: res.nodes
         };
     }
 }
@@ -91,7 +91,6 @@ export function checkInput(numa: number, operator: OPERATOR, numb: number): void
     if (typeof numa !== 'number' || typeof numb !== 'number') {
         return {
             code: RESULT_CODE.inputMustBeNumber,
-            result: [],
             text: '输入必须为数字'
         }
     }
@@ -99,7 +98,6 @@ export function checkInput(numa: number, operator: OPERATOR, numb: number): void
     if (numa < 0 || numb < 0) {
         return {
             code: RESULT_CODE.inputMustLargerThanZero,
-            result: [],
             text: '输入必须大于0'
         }
     }
@@ -107,7 +105,6 @@ export function checkInput(numa: number, operator: OPERATOR, numb: number): void
     if (operator === OPERATOR.div && numa < numb) {
         return {
             code: RESULT_CODE.divNumaSmallerThanNumb,
-            result: [],
             text: '除法时，被除数不能小于除数'
         };
     }
@@ -115,7 +112,6 @@ export function checkInput(numa: number, operator: OPERATOR, numb: number): void
     if (operator === OPERATOR.div && (numa === 0 || numb === 0)) {
         return {
             code: RESULT_CODE.divNumbCantBeZero,
-            result: [],
             text: '除法时，输入不能为 0'
         };
     }
@@ -124,7 +120,6 @@ export function checkInput(numa: number, operator: OPERATOR, numb: number): void
     && ((numa + '').indexOf('.') > -1 || (numb + '').indexOf('.') > -1)) {
         return {
             code: RESULT_CODE.numCantBeDecimal,
-            result: [],
             text: '输入不能为小数'
         }
     }
@@ -132,15 +127,12 @@ export function checkInput(numa: number, operator: OPERATOR, numb: number): void
     if (operator === OPERATOR.sub && numa < numb) {
         return {
             code: RESULT_CODE.subNumbCantSmaller,
-            result: [],
             text: '减法时，numa 不能小于 numb'
         }
     }
 
     return {
-        code: RESULT_CODE.success,
-        result: [],
-        text: ''
+        code: RESULT_CODE.success
     };
 }
 

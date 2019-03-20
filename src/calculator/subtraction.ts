@@ -39,7 +39,7 @@ export class SubCalculator extends RowGenerator {
         this.numbLength = (numb + '').length;
         this.numa = numa;
         this.numb = numb;
-        this.res = numa - numb;
+        this.res = parseFloat((numa - numb).toPrecision(12));
         this.width = Math.max((this.res + '').length, this.numaLength, this.numbLength) + 2; // 2 为加号的位置
 
         this.numaPointIndex = (numa + '').indexOf('.');
@@ -76,7 +76,10 @@ export class SubCalculator extends RowGenerator {
             this.generateResultRow(this.res)
         ];
 
-        return res;
+        return {
+            nodes: res,
+            result: this.res + ''
+        }
     }
 
     private generateMarkRow() {

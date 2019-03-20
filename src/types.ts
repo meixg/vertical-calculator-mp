@@ -50,6 +50,7 @@ export enum RESULT_CODE {
 
 export interface result {
     code: RESULT_CODE;
-    result: trNode[];
-    text: string;
+    result?: string;
+    nodes?: trNode[];
+    text?: string;
 }

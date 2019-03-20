@@ -76,7 +76,10 @@ export class AddCalculator extends RowGenerator {
             this.generateResultRow(this.res)
         ];
 
-        return res;
+        return {
+            nodes: res,
+            result: this.res + ''
+        }
     }
 
     private generateMarkRow() {
