@@ -84,11 +84,23 @@ export class SubCalculator extends RowGenerator {
 
     private generateMarkRow() {
         const row: tdNode[] = new Array(this.width);
-        for (let i = 0; i < this.width; i++) {
-            const numaText = this.numaArr[i + 1 - this.numaPreDiff];
-            const numbText = this.numbArr[i + 1 - this.numbPreDiff];
-            
-            const text = (numaText && numbText && (+numaText < +numbText)) ? '.' : '';
+
+        let needMark = false;
+        for (let i = this.width - 1; i > -1; i--) {
+            let text = '';
+            let numaText = this.numaArr[i - this.numaPreDiff];
+
+            if (numaText !== '.') {
+                let numbText = this.numbArr[i - this.numbPreDiff];
+
+                text = needMark ? '.' : '';
+                needMark = false;
+
+                if (numaText && numbText && (+numaText < +numbText)) {
+                    needMark = true;
+                }
+            }
+
             const type = BORDER_TYPES.NONE;
             row[i] = this.makeTdNode(type, text, true);
         }
