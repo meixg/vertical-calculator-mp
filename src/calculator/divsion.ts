@@ -45,8 +45,9 @@ export class DivsionCalculator extends RowGenerator {
             }
 
             const countNum = num * numb;
-            const nextLeftNum = leftNum - (countNum * ((zhengLength - i - 1) === 0 ? 1 : (zhengLength - i - 1) * 10));
-            res = res.concat(this.generateProcessRow(leftNum, countNum, nextLeftNum));
+            const nextLeftNum = leftNum - (countNum * Math.pow(10, (zhengLength - i - 1)));
+            const countDiff = zhengLength - i - 1;
+            res = res.concat(this.generateProcessRow(leftNum, countNum, nextLeftNum, countDiff));
             leftNum = nextLeftNum;
         }
 
@@ -96,11 +97,11 @@ export class DivsionCalculator extends RowGenerator {
         return this.makeTrNode(rowb.concat(rowa));
     }
 
-    private generateProcessRow(topNum: number, countNum: number, leftNum: number) {
+    private generateProcessRow(topNum: number, countNum: number, leftNum: number, countDiff:number) {
         // 第一行
         const rowCount: tdNode[] = new Array(this.width);
-        const diff = this.width - (topNum + '').length;
         const countNumLength = (countNum + '').length;
+        const diff = this.width - countNumLength - countDiff;
         const countNumArr = (countNum + '').split('');
         let i = 0
         for (;i < diff; i++) {
