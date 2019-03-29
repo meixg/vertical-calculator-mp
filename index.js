@@ -2,4 +2,4 @@ const {VerticalCalculator} = require('./dist/index');
 
 const cal = new VerticalCalculator();
 
-console.log(JSON.stringify(cal.generate(123.456, '+', 999.99).nodes));
+console.log(JSON.stringify(cal.generate(13, '+', 11.3).nodes));

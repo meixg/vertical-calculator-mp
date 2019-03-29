@@ -45,11 +45,18 @@ export class AddCalculator extends RowGenerator {
         this.numaPointIndex = (numa + '').indexOf('.');
         this.numbPointIndex = (numb + '').indexOf('.');
 
+        if (this.numaPointIndex < 0) {
+            this.numaPointIndex = this.numaLength;
+        }
+        if (this.numbPointIndex < 0) {
+            this.numbPointIndex = this.numbLength;
+        }
+
         this.pointDiff = (this.numaPointIndex > -1 || this.numbPointIndex > -1)
             ? Math.max(this.numaLength - this.numaPointIndex, this.numbLength - this.numbPointIndex)
             : -1;
         
-        if (this.pointDiff > -1) {
+        if (this.pointDiff > 0) {
             this.numaArr = numa.toFixed(this.pointDiff - 1).split('');
             this.numbArr = numb.toFixed(this.pointDiff - 1).split('');
         }
