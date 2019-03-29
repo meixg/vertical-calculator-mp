@@ -88,7 +88,7 @@ export class MultiplyCalculator extends RowGenerator {
         const numLength = (num + '').length;
         const row: tdNode[] = new Array(this.width);
         for (let i = this.width - 1; i > -1; i--) {
-            const text = numArr[i - (this.width - numLength)] || ((isSecond && i === 0) ? 'X' : '');
+            const text = numArr[i - (this.width - numLength)] || ((isSecond && i === 0) ? '×' : '');
             const borderType = isSecond ? BORDER_TYPES.BOTTOM : BORDER_TYPES.NONE;
             row[i] = this.makeTdNode(borderType, text)
         }
