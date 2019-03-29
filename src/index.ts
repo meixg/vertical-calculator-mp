@@ -141,6 +141,6 @@ export function checkInput(numa: number, operator: OPERATOR, numb: number): void
 //     trClass: ''
 // });
 
-// const res = cal.generate(11.1212, OPERATOR.sub, 25);
+// const res = cal.generate(100, OPERATOR.mul, 0);
 
 // console.log(JSON.stringify(res.result));

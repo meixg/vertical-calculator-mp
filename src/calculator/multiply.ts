@@ -26,7 +26,7 @@ export class MultiplyCalculator extends RowGenerator {
         this.numbArr = (numb + '').split('');
         this.numa = numa;
         this.numb = numb;
-        this.width = ((numa * numb) + '').length;
+        this.width = Math.max(((numa * numb) + '').length, this.numaLength, this.numbLength);
     }
 
     calculateMultiply(numa: number, numb: number) {
@@ -34,11 +34,13 @@ export class MultiplyCalculator extends RowGenerator {
         this.init(numa, numb);
 
         let res: trNode[] = [];
-        for (let i = this.numbLength - 1; i > -1; i --) {
-            const num = numa * (+this.numbArr[i]);
-            const diff = this.numbLength - 1 - i;
-
-            res.push(this.generateProcessRow(num, diff, i === 0));
+        if (this.numbLength > 1) {
+            for (let i = this.numbLength - 1; i > -1; i --) {
+                const num = numa * (+this.numbArr[i]);
+                const diff = this.numbLength - 1 - i;
+    
+                res.push(this.generateProcessRow(num, diff, i === 0));
+            }
         }
 
         res.push(this.generateResultRow(numa * numb));
@@ -72,7 +74,7 @@ export class MultiplyCalculator extends RowGenerator {
         const resultArr = (result + '').split('');
 
         for (let i = this.width - 1; i > -1; i --) {
-            const text = resultArr[i];
+            const text = resultArr[i] || '';
             const borderType = BORDER_TYPES.NONE;
             row[i] = this.makeTdNode(borderType, text);
         }
