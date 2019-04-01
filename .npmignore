@@ -1,4 +1,5 @@
 /src
 /.vscode
+/mp-demo
 webpack.config.js
 tsconfig.json
