@@ -13,9 +13,9 @@ const cal = new VerticalCalculator({
 
 Page({
     data: {
-        numa: 123.456,
-        numb: 456.123,
-        operator: '*',
+        numa: 999.009,
+        numb: 111,
+        operator: '/',
         userInfo: {},
         hasUserInfo: false,
         canIUse: swan.canIUse('button.open-type.getUserInfo'),

@@ -38,10 +38,5 @@ describe('Check Input', function () {
             assert.equal(res.code, 5);
             assert(res.text);
         });
-        it('input should not be decimal', function () {
-            const res = cal.generate(500, '/', 123.456);
-            assert.equal(res.code, 2);
-            assert(res.text);
-        });
     });
 });

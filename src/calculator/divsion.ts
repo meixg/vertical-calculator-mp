@@ -13,6 +13,11 @@ export class DivsionCalculator extends RowGenerator {
     private numbArr: string[];
     private numaLength: number;
     private numbLength: number;
+    private isDecimal: boolean;
+    private result: number;
+    private resultLength: number;
+    private resultArr: string[];
+    private addedZerosLength: number;
 
     constructor(options) {
         super(options);
@@ -25,40 +30,67 @@ export class DivsionCalculator extends RowGenerator {
         this.numbArr = (numb + '').split('');
         this.numa = numa;
         this.numb = numb;
-        this.width = this.numaLength + this.numbLength;
+        
+        this.isDecimal = this.numaArr.indexOf('.') !== -1 || this.numbArr.indexOf('.') !== -1;
+        
+        this.result = this.isDecimal ? parseFloat((numa / numb).toPrecision(7)) : parseInt(numa / numb + '', 10);
+        this.resultLength = (this.result + '').length;
+        this.resultArr = (this.result + '').split('');
+
+        this.addedZerosLength = (this.resultLength - this.resultArr.indexOf('.') - 1) - (this.numaLength - this.numaArr.indexOf('.') - 1);
+        this.width = (this.isDecimal ? this.addedZerosLength : 0) + this.numaLength + this.numbLength;
     }
 
     calculateDivision(numa: number, numb: number) {
+        const pos = (numb + '').indexOf('.');
+        if (pos !== -1) {
+            const len = (numb + '').length - pos - 1;
+            numa *= Math.pow(10, len);
+            numb *= Math.pow(10, len);
+        }
 
         this.init(numa, numb);
 
         let res = [];
-        const zheng = parseInt(numa / numb + '', 10);
-        const zhengLength = (zheng + '').length;
-        const zhengArr = (zheng + '').split('');
 
         let leftNum = numa;
-        for (let i = 0; i < zhengLength; i++) {
-            const num = +zhengArr[i];
+
+        let resultZhengLength = this.resultArr.indexOf('.');
+        if (resultZhengLength === -1) {
+            resultZhengLength = this.resultLength;
+        }
+        const pointPos = this.resultArr.indexOf('.');
+        for (let i = 0; i < this.resultLength; i++) {
+            const num = +this.resultArr[i];
             if (num === 0) {
+                if (this.isDecimal && i > pointPos - 2 && i !== this.resultLength - 1) {
+                    leftNum *= 10;
+                }
+                continue;
+            }
+
+            if (isNaN(num)) {
                 continue;
             }
 
             const countNum = num * numb;
-            const nextLeftNum = leftNum - (countNum * Math.pow(10, (zhengLength - i - 1)));
-            const countDiff = zhengLength - i - 1;
+            let nextLeftNum = +parseFloat(leftNum - (countNum * Math.pow(10, Math.max((resultZhengLength - i - 1), 0))) + '').toPrecision(7);
+            if (this.isDecimal && i > pointPos - 2 && i !== this.resultLength - 1) {
+                nextLeftNum *= 10;
+            }
+            const countDiff = this.resultLength - i - 1;
             res = res.concat(this.generateProcessRow(leftNum, countNum, nextLeftNum, countDiff));
             leftNum = nextLeftNum;
         }
 
         res = [
-            this.generateResultRow(zheng),
+            this.generateResultRow(this.result),
             this.generateQuestionRow()
         ].concat(res);
 
         return {
             nodes: res,
-            result: zheng + '余' + (numa - numb * zheng)
+            result: this.isDecimal ? '123123123' : this.result + '余' + (numa - numb * this.result)
         }
     }
 
@@ -73,7 +105,7 @@ export class DivsionCalculator extends RowGenerator {
         const row: tdNode[] = new Array(this.width);
         for (let i = this.width - 1; i > -1; i--) {
             const text = resArr[i - diff] || '';
-            const borderType = (this.width - 1 - i) < this.numaLength ? BORDER_TYPES.BOTTOM : BORDER_TYPES.NONE;
+            const borderType = i > this.numbLength - 1 ? BORDER_TYPES.BOTTOM : BORDER_TYPES.NONE;
             row[i] = this.makeTdNode(borderType, text);
         }
 
@@ -117,11 +149,19 @@ export class DivsionCalculator extends RowGenerator {
         }
         
         // 第二行
+        leftNum = +(leftNum + '').split('.').join('');
+        let addedZerosLength = this.addedZerosLength;
+        while (this.isDecimal && countDiff > 0 && leftNum < this.numb) {
+            leftNum *= 10;
+            countDiff--;
+            addedZerosLength > 0 && addedZerosLength--;
+        }
         const rowLeft: tdNode[] = new Array(this.width);
         const leftNumLength = (leftNum + '').length;
         const leftNumArr = (leftNum + '').split('');
+
         for (let i = 0; i < this.width; i++) {
-            const j = leftNumLength - (this.width - i);
+            const j = leftNumLength - (this.width - i - (this.isDecimal ? Math.min(addedZerosLength, Math.max(countDiff - 1, 0)) : 0));
             const text = leftNumArr[j] || '';
             rowLeft[i] = this.makeTdNode(BORDER_TYPES.NONE, text);
         }

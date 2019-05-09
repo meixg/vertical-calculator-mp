@@ -116,14 +116,6 @@ export function checkInput(numa: number, operator: OPERATOR, numb: number): void
         };
     }
 
-    if (operator === OPERATOR.div
-    && ((numa + '').indexOf('.') > -1 || (numb + '').indexOf('.') > -1)) {
-        return {
-            code: RESULT_CODE.numCantBeDecimal,
-            text: '输入不能为小数'
-        }
-    }
-
     if (operator === OPERATOR.sub && numa < numb) {
         return {
             code: RESULT_CODE.subNumbCantSmaller,
@@ -141,6 +133,6 @@ export function checkInput(numa: number, operator: OPERATOR, numb: number): void
 //     trClass: ''
 // });
 
-// const res = cal.generate(13, OPERATOR.add, 11.3);
+// const res = cal.generate(999.009, OPERATOR.div, 111);
 
 // console.log(JSON.stringify(res.result));
