@@ -1,13 +1,10 @@
 <!-- index.swan -->
 <view class="container">
-  <view class="logo">
-  </view>
-  <rich-text nodes="{{nodes}}"></rich-text>
-  <view class="userinfo">
-    <button class="userinfo-login-btn" s-if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <view s-else class="userinfo-message">
-      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    <view class="logo">
     </view>
-  </view>
+    <input value="{{numa}}" data-name="numa" bindchange="changeHandler" class="input-aaa" maxlength="20" placeholder="numa" />
+    <input value="{{operator}}" data-name="operator" bindchange="changeHandler" class="input-aaa" maxlength="20" placeholder="opt" />
+    <input value="{{numb}}" data-name="numb" bindchange="changeHandler" class="input-aaa" maxlength="20" placeholder="numb" />
+    <view bindtap="tapHandler" type="default" class="button-aaa">计算！</view>
+    <rich-text nodes="{{nodes}}"></rich-text>
 </view>

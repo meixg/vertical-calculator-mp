@@ -44,3 +44,15 @@
   color: #aaa;
   width: 150rpx;
 }
+
+.input-aaa {
+  width: 200rpx;
+  border: 1px solid #000;
+}
+.button-aaa {
+  width: 200rpx;
+  height: 200rpx;
+  border: 1px solid red;
+  text-align: center;
+  line-height: 200rpx;
+}
