@@ -44,12 +44,4 @@ describe('Check Input', function () {
             assert(res.text);
         });
     });
-
-    describe('multiply', function () {
-        it('input should not be decimal', function () {
-            const res = cal.generate(500, '*', 123.456);
-            assert.equal(res.code, 2);
-            assert(res.text);
-        });
-    });
 });

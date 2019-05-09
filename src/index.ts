@@ -116,7 +116,7 @@ export function checkInput(numa: number, operator: OPERATOR, numb: number): void
         };
     }
 
-    if ((operator === OPERATOR.mul || operator === OPERATOR.div)
+    if (operator === OPERATOR.div
     && ((numa + '').indexOf('.') > -1 || (numb + '').indexOf('.') > -1)) {
         return {
             code: RESULT_CODE.numCantBeDecimal,

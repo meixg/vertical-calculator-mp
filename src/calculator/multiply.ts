@@ -34,12 +34,19 @@ export class MultiplyCalculator extends RowGenerator {
         this.init(numa, numb);
 
         let res: trNode[] = [];
-        if (this.numbLength > 1 && this.numb !== 0 && this.numa !== 0) {
-            for (let i = this.numbLength - 1; i > -1; i --) {
-                const num = numa * (+this.numbArr[i]);
-                const diff = this.numbLength - 1 - i;
-    
+
+        const noPointNumb = +(numb + '').split('.').join('');
+        const noPointNumbArr = (noPointNumb + '').split('');
+        if (noPointNumbArr.length > 1 && this.numb !== 0 && this.numa !== 0) {
+            const noPointNuma = +(numa + '').split('.').join('');
+            let diff = 0;
+
+            for (let i = noPointNumbArr.length - 1; i > -1; i --) {
+                const currentB = +noPointNumbArr[i];
+
+                const num = noPointNuma * currentB;
                 res.push(this.generateProcessRow(num, diff, i === 0));
+                diff++;
             }
         }
 
@@ -73,6 +80,18 @@ export class MultiplyCalculator extends RowGenerator {
         const row: tdNode[] = new Array(this.width);
         const resultArr = (result + '').split('');
 
+        const decimals = countDecimal(this.numaArr) + countDecimal(this.numbArr);
+        const resDec = countDecimal(resultArr);
+
+        if (decimals - resDec > 0) {
+            if (resDec === 0) {
+                resultArr.push('.');
+            }
+            for (let i = 0; i < decimals - resDec; i ++) {
+                resultArr.push('0');
+            }
+        }
+
         const diff = this.width - resultArr.length;
         for (let i = this.width - 1; i > -1; i--) {
             const text = resultArr[i - diff] || '';
@@ -81,6 +100,14 @@ export class MultiplyCalculator extends RowGenerator {
         }
 
         return this.makeTrNode(row);
+
+        function countDecimal(numArr: string[]) {
+            const pos = numArr.indexOf('.');
+            if (pos !== -1) {
+                return numArr.length - pos - 1;
+            }
+            return 0;
+        }
     }
 
     private generateQuestionRow(num: number, isSecond: boolean) {

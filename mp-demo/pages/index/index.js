@@ -14,7 +14,7 @@ const cal = new VerticalCalculator({
 Page({
     data: {
         numa: 123.456,
-        numb: 456,
+        numb: 456.123,
         operator: '*',
         userInfo: {},
         hasUserInfo: false,
