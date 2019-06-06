@@ -23,7 +23,7 @@ export class DivsionCalculator extends RowGenerator {
         super(options);
     }
 
-    private init(numa: number, numb: number) {
+    private init(numa: number, numb: number, len: number) {
         this.numaLength = (numa + '').length;
         this.numbLength = (numb + '').length;
         this.numaArr = (numa + '').split('');
@@ -31,25 +31,29 @@ export class DivsionCalculator extends RowGenerator {
         this.numa = numa;
         this.numb = numb;
         
-        this.isDecimal = this.numaArr.indexOf('.') !== -1 || this.numbArr.indexOf('.') !== -1;
+        this.isDecimal = this.isDecimal || this.numaArr.indexOf('.') !== -1 || this.numbArr.indexOf('.') !== -1;
         
         this.result = this.isDecimal ? parseFloat((numa / numb).toPrecision(7)) : parseInt(numa / numb + '', 10);
         this.resultLength = (this.result + '').length;
         this.resultArr = (this.result + '').split('');
 
-        this.addedZerosLength = (this.resultLength - this.resultArr.indexOf('.') - 1) - (this.numaLength - this.numaArr.indexOf('.') - 1);
+        this.addedZerosLength = (this.resultLength - this.resultArr.indexOf('.') - 1)
+            - (this.numaArr.indexOf('.') !== -1 ? this.numaLength - this.numaArr.indexOf('.') - 1 : 0)
+            + len;
         this.width = (this.isDecimal ? this.addedZerosLength : 0) + this.numaLength + this.numbLength;
     }
 
     calculateDivision(numa: number, numb: number) {
         const pos = (numb + '').indexOf('.');
+        let len = 0;
         if (pos !== -1) {
-            const len = (numb + '').length - pos - 1;
+            this.isDecimal = true;
+            len = (numb + '').length - pos - 1;
             numa *= Math.pow(10, len);
             numb *= Math.pow(10, len);
         }
 
-        this.init(numa, numb);
+        this.init(numa, numb, len);
 
         let res = [];
 
@@ -90,7 +94,7 @@ export class DivsionCalculator extends RowGenerator {
 
         return {
             nodes: res,
-            result: this.isDecimal ? '123123123' : this.result + '余' + (numa - numb * this.result)
+            result: this.isDecimal ? this.result + '' : this.result + '余' + (numa - numb * this.result)
         }
     }
 

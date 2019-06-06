@@ -128,11 +128,11 @@ export function checkInput(numa: number, operator: OPERATOR, numb: number): void
     };
 }
 
-const cal = new VerticalCalculator({
-    tdClass: '',
-    trClass: ''
-});
+// const cal = new VerticalCalculator({
+//     tdClass: '',
+//     trClass: ''
+// });
 
-const res = cal.generate(123.123, OPERATOR.mul, 345.111);
+// const res = cal.generate(78, OPERATOR.div, 2.2);
 
-console.log(JSON.stringify(res.result));
+// console.log(JSON.stringify(res.result));
