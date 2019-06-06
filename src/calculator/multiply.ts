@@ -14,6 +14,7 @@ export class MultiplyCalculator extends RowGenerator {
     private numbArr: string[];
     private numaLength: number;
     private numbLength: number;
+    private result: number;
 
     constructor(options) {
         super(options);
@@ -26,7 +27,8 @@ export class MultiplyCalculator extends RowGenerator {
         this.numbArr = (numb + '').split('');
         this.numa = numa;
         this.numb = numb;
-        this.width = Math.max(((numa * numb) + '').length, this.numaLength, this.numbLength) + 2;
+        this.result = parseFloat((numa * numb).toPrecision(12));
+        this.width = Math.max((this.result + '').length, this.numaLength, this.numbLength) + 2;
     }
 
     calculateMultiply(numa: number, numb: number) {
@@ -50,7 +52,7 @@ export class MultiplyCalculator extends RowGenerator {
             }
         }
 
-        res.push(this.generateResultRow(numa * numb));
+        res.push(this.generateResultRow(this.result));
 
         res = [
             this.generateQuestionRow(numa, false),
@@ -59,7 +61,7 @@ export class MultiplyCalculator extends RowGenerator {
 
         return {
             nodes: res,
-            result: (numa * numb) + ''
+            result: this.result + ''
         };
     }
 
