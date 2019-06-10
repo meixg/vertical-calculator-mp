@@ -45,7 +45,8 @@ export enum RESULT_CODE {
     divNumaSmallerThanNumb, // 除法时，被除数不能小于除数
     divNumbCantBeZero, // 除法时，被除数不能为0
     subNumbCantSmaller, // 减法时，numa 不能比 numb 小
-    inputMustLargerThanZero // 输入不能为小数
+    inputMustLargerThanZero, // 输入不能为小数
+    exceedPrecision // 超出精度
 }
 
 export interface result {

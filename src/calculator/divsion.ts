@@ -37,9 +37,8 @@ export class DivsionCalculator extends RowGenerator {
         this.resultLength = (this.result + '').length;
         this.resultArr = (this.result + '').split('');
 
-        this.addedZerosLength = (this.resultLength - this.resultArr.indexOf('.') - 1)
-            - (this.numaArr.indexOf('.') !== -1 ? this.numaLength - this.numaArr.indexOf('.') - 1 : 0)
-            + len;
+        this.addedZerosLength = (this.resultLength - this.resultArr.indexOf('.'))
+            - (this.numaArr.indexOf('.') !== -1 ? this.numaLength - this.numaArr.indexOf('.') : 0);
         this.width = (this.isDecimal ? this.addedZerosLength : 0) + this.numaLength + this.numbLength;
     }
 

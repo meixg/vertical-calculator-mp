@@ -102,25 +102,55 @@ export function checkInput(numa: number, operator: OPERATOR, numb: number): void
         }
     }
 
-    if (operator === OPERATOR.div && numa < numb) {
-        return {
-            code: RESULT_CODE.divNumaSmallerThanNumb,
-            text: '除法时，被除数不能小于除数'
-        };
-    }
+    const numaLength = ('' + numa).replace('.', '').length;
+    const numbLength = ('' + numb).replace('.', '').length;
 
-    if (operator === OPERATOR.div && (numa === 0 || numb === 0)) {
-        return {
-            code: RESULT_CODE.divNumbCantBeZero,
-            text: '除法时，输入不能为 0'
-        };
-    }
-
-    if (operator === OPERATOR.sub && numa < numb) {
-        return {
-            code: RESULT_CODE.subNumbCantSmaller,
-            text: '减法时，numa 不能小于 numb'
-        }
+    switch (operator) {
+        case OPERATOR.div:
+            if (numa < numb) {
+                return {
+                    code: RESULT_CODE.divNumaSmallerThanNumb,
+                    text: '除法时，被除数不能小于除数'
+                };
+            }
+            else if (numa === 0 || numb === 0) {
+                return {
+                    code: RESULT_CODE.divNumbCantBeZero,
+                    text: '除法时，输入不能为 0'
+                };
+            }
+            break;
+        case OPERATOR.sub:
+            if (numa < numb) {
+                return {
+                    code: RESULT_CODE.subNumbCantSmaller,
+                    text: '减法时，numa 不能小于 numb'
+                }
+            }
+            else if (parseFloat((numa - numb).toPrecision(12)) !== parseFloat((numa - numb).toPrecision(13))) {
+                return {
+                    code: RESULT_CODE.exceedPrecision,
+                    text: '超出精度'
+                }
+            }
+            break;
+        case OPERATOR.add:
+            if (parseFloat((numa + numb).toPrecision(12)) !== parseFloat((numa + numb).toPrecision(13))) {
+                return {
+                    code: RESULT_CODE.exceedPrecision,
+                    text: '超出精度'
+                }
+            }
+            break;
+        case OPERATOR.mul:
+            if (
+                parseFloat((numa * numb).toPrecision(12)) !== parseFloat((numa * numb).toPrecision(13))) {
+                return {
+                    code: RESULT_CODE.exceedPrecision,
+                    text: '超出精度'
+                }
+            }
+            break;
     }
 
     return {
@@ -133,6 +163,6 @@ export function checkInput(numa: number, operator: OPERATOR, numb: number): void
 //     trClass: ''
 // });
 
-// const res = cal.generate(78, OPERATOR.div, 2.2);
+// const res = cal.generate(11111, OPERATOR.div, 553.888);
 
 // console.log(JSON.stringify(res.result));

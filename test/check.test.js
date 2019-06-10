@@ -39,4 +39,12 @@ describe('Check Input', function () {
             assert(res.text);
         });
     });
+
+    describe('multi', function () {
+        it('exceed', function () {
+            const res = cal.generate(11111.784, '*', 553.568);
+            assert.equal(res.code, 8);
+            assert(res.text);
+        });
+    });
 });
