@@ -1,7 +1,7 @@
 {
   "name": "vertical-calculator-mp",
-  "version": "0.1.1",
-  "description": "",
+  "version": "0.1.2",
+  "description": "外层包裹上 table 和 tbody 标签",
   "main": "dist/index.js",
   "dependencies": {},
   "devDependencies": {
