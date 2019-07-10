@@ -18,7 +18,7 @@ function getTest(numa, opt, numb, nodes, ans) {
         const res = cal.generate(numa, opt, numb);
         const result = nodes; // eslint-disable-line
         assert.equal(res.code, 0);
-        assert.deepEqual(res.nodes, result);
+        assert.deepEqual(res.nodes[0].children[0].children, result);
 
         if (ans) {
             assert.equal(res.result, ans);
