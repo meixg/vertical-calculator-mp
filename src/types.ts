@@ -13,6 +13,23 @@ export enum OPERATOR {
     sub = '-'
 }
 
+export interface tableNode {
+    name: string;
+    attrs: {
+        style?: string;
+        class?: string;
+    }
+    children: {
+        name: string;
+        attrs: {
+            style?: string;
+            class?: string;
+        }
+        children: trNode[];
+    }[];
+}
+
+
 export interface trNode {
     name: string;
     attrs: {
@@ -52,6 +69,6 @@ export enum RESULT_CODE {
 export interface result {
     code: RESULT_CODE;
     result?: string;
-    nodes?: trNode[];
+    nodes?: tableNode[];
     text?: string;
 }

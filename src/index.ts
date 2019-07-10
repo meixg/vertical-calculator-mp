@@ -7,7 +7,8 @@ import {
     OPERATOR,
     result,
     RESULT_CODE,
-    trNode
+    trNode,
+    tableNode
 } from './types';
 import {DivsionCalculator} from './calculator/divsion';
 import {MultiplyCalculator} from './calculator/multiply';
@@ -79,10 +80,24 @@ export class VerticalCalculator {
             };
         };
 
+        const nodes: tableNode[] = [{
+            name: 'table',
+            attrs: {
+                class: ''
+            },
+            children: [{
+                name: 'tbody',
+                attrs: {
+                    class: ''
+                },
+                children: res.nodes
+            }]
+        }]
+
         return {
             code: RESULT_CODE.success,
             result: res.result,
-            nodes: res.nodes
+            nodes
         };
     }
 }
